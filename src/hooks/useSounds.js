@@ -1,23 +1,30 @@
 import { useEffect, useRef } from 'react';
 import * as Tone from 'tone';
 
+import kick from 'assets/sounds/Kick.wav';
+import clap from 'assets/sounds/Clap.wav';
+import cowbell from 'assets/sounds/Cowbell.wav';
+import hithat from 'assets/sounds/HitHat.wav';
+
 export default function useSounds() {
     const mySampler = useRef(null);
     useEffect(() => {
         const sampler = new Tone.Sampler({
-            urls: {
-                C4: 'C4.mp3',
-                'D#4': 'Ds4.mp3',
-                'F#4': 'Fs4.mp3',
-                A4: 'A4.mp3',
-            },
-            release: 1,
-            baseUrl: 'https://tonejs.github.io/audio/salamander/',
+            C4: kick,
+            'D#4': clap,
+            'F#4': cowbell,
+            A4: hithat,
         }).toDestination();
+
         Tone.loaded().then(() => {
             mySampler.current = sampler;
         });
     }, []);
-
-    return;
+    const buttonsList = [
+        { soundPlay: () => mySampler.current.triggerAttackRelease(['C4'], 4) },
+        { soundPlay: () => mySampler.current.triggerAttackRelease(['D#4'], 4) },
+        { soundPlay: () => mySampler.current.triggerAttackRelease(['F#4'], 4) },
+        { soundPlay: () => mySampler.current.triggerAttackRelease(['A4'], 4) },
+    ];
+    return { buttonsList };
 }
