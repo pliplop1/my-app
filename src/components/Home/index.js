@@ -1,8 +1,10 @@
 import styled from 'styled-components';
 import GridButton from './GridButton';
+import useSounds from 'hooks/useSounds';
 
 const list = ['el1', 'el2', 'el3', 'el4'];
 export default function Home() {
+    useSounds();
     return (
         <Wrapper>
             <Grid>
